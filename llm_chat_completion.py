@@ -29,14 +29,15 @@ async def get_chat_completion_using_instructor(messages: list[dict], model: str)
         messages=messages,
         model=model,
         temperature=0,
-        response_model = UserResponse,
-        max_retries = 2,
+        response_model=UserResponse,
+        max_retries=2,
         seed=42
     )
     return response.llm_response
 
-async def respond_to_user_query(query:str):
-    messages = build_message([],query)
+
+async def respond_to_user_query(query: str):
+    messages = build_message([], query)
 
     answer = await get_chat_completion_using_instructor(messages, "gpt-3.5-turbo")
 

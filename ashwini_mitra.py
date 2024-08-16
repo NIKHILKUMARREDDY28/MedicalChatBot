@@ -16,6 +16,6 @@ async def main(message: cl.Message):
 
     response = await respond_to_user_query(query)
 
-    print(f"Responding the Query:{query} ----> {response}")
+    print(f"Responding the Query : {query} ----> {response}")
 
     await cl.Message(content=f"{response}").send()
