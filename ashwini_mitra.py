@@ -1,5 +1,7 @@
 import chainlit as cl
 
+from llm_chat_completion import respond_to_user_query
+
 
 @cl.on_chat_start
 async def main():
@@ -10,4 +12,10 @@ async def main():
 @cl.on_message
 async def main(message: cl.Message):
 
-    await cl.Message(content=f"Response for the Query:{message.content}").send()
+    query = message.content
+
+    response = await respond_to_user_query(query)
+
+    print(f"Responding the Query:{query} ----> {response}")
+
+    await cl.Message(content=f"{response}").send()
