@@ -9,7 +9,7 @@ def read_main():
     return {"message": "Hello World from FastAPI app"}
 
 
-mount_chainlit(app=app, target="chainlit_app.py", path="/ashwini-mitra")
+mount_chainlit(app=app, target="ashwini_mitra.py", path="/ashwini-mitra")
 
 
 if __name__ == "__main__":
