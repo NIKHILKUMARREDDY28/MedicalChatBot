@@ -1,3 +1,5 @@
+import os
+
 from pydantic_settings import BaseSettings
 
 
@@ -11,3 +13,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings(_env_file=".env")
+os.environ.update(settings.model_dump())
