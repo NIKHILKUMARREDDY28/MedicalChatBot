@@ -10,6 +10,7 @@ python = "^3.12"
 instructor = "^1.3.7"
 fastapi = {extras = ["all"], version = "^0.112.1"}
 pydantic-settings = "^2.4.0"
+bhashini-translator = "^0.4"
 
 
 [build-system]

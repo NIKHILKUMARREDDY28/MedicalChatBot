@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 
 from settings import settings
 
-instructor_async_client = instructor.patch(AsyncOpenAI(api_key=settings.OPENAI_API_KEY))
+instructor_async_client = instructor.from_openai(AsyncOpenAI(api_key=settings.OPENAI_API_KEY))
 
 DEFAULT_SYSTEM_PROMPT = """
 You are a world class AI Health Assistant.You will be assisting the user in their health queries.
