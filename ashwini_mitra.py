@@ -1,34 +1,46 @@
 import chainlit as cl
-
 from llm_chat_completion import respond_to_user_query
 
 
 @cl.on_chat_start
 async def main():
-
-
-    await cl.Message(content="Welcome! I am AshwiniMitra, your virtual health assistant. Ready to diagnose your "
-                             "queries and prescribe solutions. How can I assist you today?").send()
+    welcome_msg = (
+        "Welcome! I am AshwiniMitra, your virtual health assistant. I specialize in providing "
+        "diagnostic advice and precautions for children (0-18 years) with common symptoms such as cough, fever, and cold. "
+        "How can I assist you today?"
+    )
+    await cl.Message(content=welcome_msg).send()
 
 
 @cl.on_message
 async def main(message: cl.Message):
-    query = message.content
+    query = message.content.strip()
 
+    # Call your function to generate a response. This function should include logic to:
+    # 1. Check if the query is medical and specifically relevant to children.
+    # 2. If the query is recognized as one of the common cases (cough, fever, cold), provide a quick reply.
+    # 3. If the query is unclear or outside scope, return a default fallback message.
     response = await respond_to_user_query(query)
 
-    print(f"Responding the Query : {query} ----> {response}")
+    # Example fallback in case the LLM does not provide a specific response.
+    if not response:
+        response = (
+            "I'm sorry, I couldn't fully understand your query. However, please be assured that our doctors "
+            "will review your case within the next 1-2 hours. In the meantime, here are some general precautions: "
+            "stay hydrated, ensure rest, and monitor the symptoms closely. If the condition worsens, please seek immediate medical attention."
+        )
 
-    await cl.Message(content=f"{response}").send()
+    print(f"Responding to Query: '{query}' ----> '{response}'")
+    await cl.Message(content=response).send()
 
 
 @cl.password_auth_callback
 def auth_callback(username: str, password: str):
-    # Fetch the user matching username from your database
-    # and compare the hashed password with the value stored in the database
+    # In a production setting, ensure to securely check the credentials against your database.
     if (username, password) == ("admin", "admin"):
         return cl.User(
-            identifier="admin", metadata={"role": "admin", "provider": "credentials"}
+            identifier="admin",
+            metadata={"role": "admin", "provider": "credentials"}
         )
     else:
         return None
